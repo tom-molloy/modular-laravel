@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+docker compose build
+
+docker compose up -d postgres
+
+docker compose run --rm composer install
+
+docker compose run --rm npm install
+
+docker compose run --rm artisan migrate:fresh
+
+docker compose run --rm artisan db:seed
+
+
+
+echo  "Setup Complete! please run:"
+echo  "docker compose up dev"
+echo  "to start the application"
