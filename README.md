@@ -17,3 +17,14 @@ Run this script from the root directory of the repo:
 ```
 docker compose run --rm artisan test
 ```
+
+## Linters
+```
+docker compose run --rm composer run rector
+```
+```
+docker compose run --rm composer run pint
+```
+```
+docker compose run --rm composer run phpstan
+```

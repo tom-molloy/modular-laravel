@@ -1,5 +1,6 @@
 {
     "name": "laravel/laravel",
+    "version": "1.0.0",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
@@ -15,7 +16,9 @@
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^11.0.1"
+        "phpstan/phpstan": "^1.12",
+        "phpunit/phpunit": "^11.0.1",
+        "rector/rector": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -44,7 +47,10 @@
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
-        ]
+        ],
+        "phpstan": "vendor/bin/phpstan",
+        "pint": "vendor/bin/pint",
+        "rector": "vendor/bin/rector"
     },
     "extra": {
         "laravel": {
