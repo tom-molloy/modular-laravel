@@ -28,13 +28,12 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: actions/checkout@v3
     - uses: docker/login-action@v1
       with:
         registry: ghcr.io
         username: ${{github.actor}}
         password: ${{secrets.GITHUB_TOKEN}}
-    - run: docker compose run --rm composer run pint
+    - run: docker run --rm ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:$TAG composer run pint
 
   rector:
     runs-on: ubuntu-latest
@@ -43,13 +42,12 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: actions/checkout@v3
     - uses: docker/login-action@v1
       with:
         registry: ghcr.io
         username: ${{github.actor}}
         password: ${{secrets.GITHUB_TOKEN}}
-    - run: docker compose run --rm composer run rector
+    - run: docker run --rm ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:$TAG composer run rector
 
   phpstan:
     runs-on: ubuntu-latest
@@ -58,10 +56,9 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: actions/checkout@v3
     - uses: docker/login-action@v1
       with:
         registry: ghcr.io
         username: ${{github.actor}}
         password: ${{secrets.GITHUB_TOKEN}}
-    - run: docker compose run --rm composer run phpstan    
+    - run: docker run --rm ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:$TAG composer run phpstan    
