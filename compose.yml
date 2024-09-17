@@ -61,6 +61,8 @@ services:
 
   test:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
+    environment:
+      APP_ENV: testing # use .env.testing
     depends_on:
       - postgres
     user: '1000:1000'
