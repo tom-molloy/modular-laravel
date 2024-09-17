@@ -16,6 +16,9 @@ services:
     build:
       context: .
       target: php-fpm-dev
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}      
     depends_on:
       - postgres
     ports:
@@ -39,7 +42,7 @@ services:
 
   composer:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    user: '1000:1000'
+    user: ${UID:-1000}:${GID:-1000}
     volumes:
       - .:/var/www/html
     entrypoint: composer
@@ -48,7 +51,7 @@ services:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
     depends_on:
       - postgres
-    user: '1000:1000'
+    user: ${UID:-1000}:${GID:-1000}
     volumes:
       - .:/var/www/html
     entrypoint: php artisan
@@ -65,7 +68,6 @@ services:
       APP_ENV: testing # use .env.testing
     depends_on:
       - postgres
-    user: '1000:1000'
     entrypoint: php artisan test
 
   psql:
