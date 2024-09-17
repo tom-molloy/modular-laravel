@@ -21,47 +21,47 @@ jobs:
     - run: docker compose build
     - run: docker compose push
 
-  # pint:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   permissions:
-  #     contents: read
-  #     packages: write
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: docker/login-action@v1
-  #     with:
-  #       registry: ghcr.io
-  #       username: ${{github.actor}}
-  #       password: ${{secrets.GITHUB_TOKEN}}
-  #   - run: docker compose run --rm composer run pint
+  pint:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{github.actor}}
+        password: ${{secrets.GITHUB_TOKEN}}
+    - run: docker compose run --rm composer run pint
 
-  # rector:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   permissions:
-  #     contents: read
-  #     packages: write
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: docker/login-action@v1
-  #     with:
-  #       registry: ghcr.io
-  #       username: ${{github.actor}}
-  #       password: ${{secrets.GITHUB_TOKEN}}
-  #   - run: docker compose run --rm composer run rector
+  rector:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{github.actor}}
+        password: ${{secrets.GITHUB_TOKEN}}
+    - run: docker compose run --rm composer run rector
 
-  # phpstan:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   permissions:
-  #     contents: read
-  #     packages: write
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - uses: docker/login-action@v1
-  #     with:
-  #       registry: ghcr.io
-  #       username: ${{github.actor}}
-  #       password: ${{secrets.GITHUB_TOKEN}}
-  #   - run: docker compose run --rm composer run phpstan    
+  phpstan:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{github.actor}}
+        password: ${{secrets.GITHUB_TOKEN}}
+    - run: docker compose run --rm composer run phpstan    
