@@ -4,3 +4,4 @@ parameters:
     paths:
         - app
         - tests
+        - modules
