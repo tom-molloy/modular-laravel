@@ -51,7 +51,7 @@ services:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
     depends_on:
       - postgres
-    user: ${UID:-1000}:${GID:-1000}
+    # user: ${UID:-1000}:${GID:-1000}
     volumes:
       - .:/var/www/html
     entrypoint: php artisan
