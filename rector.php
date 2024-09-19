@@ -16,7 +16,7 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withSkip([
-        __DIR__.'/bootstrap/cache'
+        __DIR__.'/bootstrap/cache',
     ])
     // uncomment to reach your current PHP version
     ->withPhpSets()
