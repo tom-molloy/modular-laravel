@@ -29,7 +29,7 @@ services:
   postgres:
     image: postgres:16.3-alpine3.20
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: password
       PGPASSWORD: password
       POSTGRES_DB: laravel
@@ -38,6 +38,7 @@ services:
         aliases:
           - postgres.local
     volumes:
+      - ./bin/init-testing-db.sh:/docker-entrypoint-initdb.d/init-testing-db.sh
       - db:/var/lib/postgresql/data
 
   composer:

@@ -14,7 +14,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $blueprint): void {
-            $blueprint->id();
+            $blueprint->uuid('id')->primary();
+            $blueprint->string('name');
+            $blueprint->integer('price_in_cents');
+            $blueprint->integer('stock');
             $blueprint->timestamps();
         });
     }

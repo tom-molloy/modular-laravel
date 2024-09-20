@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Modules\Product\Tests;
 
-use Illuminate\Foundation\Testing\TestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Modules\Product\Models\Product;
 
-final class ProductTest extends TestCase
+final class ProductTest extends ProductTestCase
 {
-    public function testItCreatesAnOrder(): void
-    {
-        new Product;
+    use DatabaseMigrations;
 
-        $this->assertTrue(true);
+    public function testItCreatesAProduct(): void
+    {
+        $product = Product::factory()->create();
+
+        $this->assertNotNull($product);
     }
 }

@@ -1,14 +1,19 @@
 <?php
 
-namespace Database\Factories;
+declare(strict_types=1);
+
+namespace Modules\Order\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Order\Models\OrderLine;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<OrderLine>
  */
-class ProductFactory extends Factory
+class OrderLineFactory extends Factory
 {
+    protected $model = OrderLine::class;
+
     /**
      * Define the model's default state.
      *
