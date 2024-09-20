@@ -1,6 +1,8 @@
 parameters:
     level: 9
     tmpDir: .cache/phpstan
+    scanFiles:
+      - _ide_helper.php
     paths:
         - app
         - tests

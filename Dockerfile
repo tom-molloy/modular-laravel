@@ -54,6 +54,7 @@ WORKDIR /var/www/html
 COPY . .
 COPY --from=composer-install --chown=www-data:www-data /example-app/vendor vendor
 RUN composer dump -o
+RUN composer run ide-helper
 RUN chown -R www-data:www-data /var/www/html && chmod -R 775 /var/www/html/storage
 USER www-data
 CMD ["php", "artisan", "serve", "--host=0.0.0.0"]
