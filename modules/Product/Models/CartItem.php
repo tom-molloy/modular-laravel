@@ -18,9 +18,6 @@ use Modules\Product\Database\Factories\CartItemFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|CartItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */

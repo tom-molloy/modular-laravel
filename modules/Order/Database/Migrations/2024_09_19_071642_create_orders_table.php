@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $blueprint): void {
             $blueprint->uuid('id');
+            $blueprint->foreignId('user_id');
+            $blueprint->unsignedInteger('total_in_cents');
+            $blueprint->string('status');
+            $blueprint->string('payment_gateway');
+            $blueprint->foreignUuid('payment_id');
             $blueprint->timestamps();
         });
     }

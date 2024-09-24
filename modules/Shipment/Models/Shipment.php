@@ -18,9 +18,6 @@ use Modules\Shipment\Database\Factories\ShipmentFactory;
  * @method static \Illuminate\Database\Eloquent\Builder|Shipment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Shipment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Shipment query()
- * @method static \Illuminate\Database\Eloquent\Builder|Shipment whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipment whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Shipment whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */

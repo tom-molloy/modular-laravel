@@ -13,6 +13,7 @@ class RouteServiceProvider extends BaseRouteServiceProvider
     {
         $this->routes(function (): void {
             Route::middleware('web')
+                ->as('order::')
                 ->group(__DIR__.'/../routes.php');
         });
     }

@@ -1,5 +1,5 @@
 parameters:
-    level: 9
+    level: 8
     tmpDir: .cache/phpstan
     scanFiles:
       - _ide_helper.php

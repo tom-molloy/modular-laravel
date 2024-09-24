@@ -2,9 +2,13 @@
 
 FROM php:8.3.3-fpm-alpine3.18 AS base
 RUN set -ex \
-  && apk --no-cache add postgresql-dev \
-  && docker-php-ext-install pdo pdo_pgsql bcmath \
-  && rm -rf /var/cache/apk/*
+  && apk add --update icu \
+  && apk --no-cache --virtual .build-deps add postgresql-dev icu-dev \
+  && docker-php-ext-configure intl \
+  && docker-php-ext-install pdo pdo_pgsql bcmath intl \
+  && docker-php-ext-enable intl \
+  && apk del .build-deps \
+  && rm -rf /tmp/* /var/cache/apk/*
 
 # Install JS dependencies
 
@@ -15,9 +19,8 @@ RUN npm install
 
 # Install PHP dependencies
 
-FROM php:8.3.3-fpm-alpine3.18 AS composer-install
+FROM base AS composer-install
 WORKDIR /example-app
-COPY --from=base /usr/local /usr/local
 COPY --from=composer:2.7.2 /usr/bin/composer /usr/bin/composer
 RUN apk update && \
 	apk add postgresql-libs && \

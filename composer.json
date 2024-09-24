@@ -20,7 +20,7 @@
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
-        "phpstan/phpstan": "^1.12",
+        "phpstan/phpstan": "1.12.4",
         "phpunit/phpunit": "^11.0.1",
         "rector/rector": "^1.2"
     },
@@ -54,8 +54,8 @@
         "ide-helper": "@php artisan ide-helper:generate",
         "ide-helper-models": [
             "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:models -W --dir modules",
-            "composer pint"
+            "@php artisan ide-helper:models -W",
+            "composer pint app/Models/*.php modules/*/Models/*.php"
         ],
         "phpstan": "vendor/bin/phpstan",
         "pint": "vendor/bin/pint",
