@@ -61,6 +61,11 @@ final class CheckoutControllerTest extends OrderTestCase
             $this->assertSame($product->price_in_cents, $orderLine?->total_in_cents);
             $this->assertSame(1, $orderLine->quantity);
         }
+
+        $products = $products->fresh();
+
+        $this->assertSame(9, $products->first()?->stock);
+        $this->assertSame(9, $products->last()?->stock);
     }
 
     #[Test]

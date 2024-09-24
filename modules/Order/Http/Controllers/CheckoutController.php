@@ -50,6 +50,8 @@ class CheckoutController
         ]);
 
         foreach ($products as $product) {
+            $product->decrement('stock');
+
             $order->lines()->create([
                 'product_id' => $product->id,
                 'total_in_cents' => $product->price_in_cents,
