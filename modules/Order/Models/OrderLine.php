@@ -26,6 +26,13 @@ use Modules\Product\Models\Product;
  * @method static \Illuminate\Database\Eloquent\Builder|OrderLine newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderLine newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderLine query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereTotalInCents($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderLine whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */

@@ -28,6 +28,14 @@ use Modules\Order\Database\Factories\OrderFactory;
  * @method static \Illuminate\Database\Eloquent\Builder<Order> newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<Order> newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<Order> query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentGateway($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereTotalInCents($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  *
  * @mixin \Eloquent
  */

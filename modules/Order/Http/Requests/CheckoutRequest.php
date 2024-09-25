@@ -7,6 +7,8 @@ namespace Modules\Order\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
+ * @property array $products
+ *
  * @method mixed input(string|null $key, mixed $default = null)
  * @method \Illuminate\Support\Stringable string(string $key, mixed $default = null)
  */

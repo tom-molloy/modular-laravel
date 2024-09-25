@@ -10,23 +10,20 @@ use Illuminate\Validation\ValidationException;
 use Modules\Order\Http\Requests\CheckoutRequest;
 use Modules\Order\Models\Order;
 use Modules\Payment\PayBuddy;
-use Modules\Product\Models\Product;
+use Modules\Product\CartItemCollection;
+use Modules\Product\Warehouse\ProductStockManager;
 
 class CheckoutController
 {
+    public function __construct(
+        protected ProductStockManager $productStockManager
+    ) {}
+
     public function __invoke(CheckoutRequest $checkoutRequest, Guard $guard): JsonResponse
     {
-        $productsInput = (array) $checkoutRequest->input('products');
+        $cartItemCollection = CartItemCollection::fromCheckoutData((array) $checkoutRequest->input('products'));
 
-        /** @var array<string, int> */
-        $productQuantities = array_column($productsInput, 'quantity', 'id');
-
-        $products = Product::query()->whereIn('id', array_column($productsInput, 'id'))
-            ->get();
-
-        $orderTotal = $products->sum(
-            fn (Product $product): int => $product->price_in_cents * $productQuantities[$product->id]
-        );
+        $orderTotal = $cartItemCollection->totalInCents();
 
         $payBuddy = PayBuddy::make();
         try {
@@ -49,13 +46,16 @@ class CheckoutController
             'user_id' => $guard->user()?->getAuthIdentifier(),
         ]);
 
-        foreach ($products as $product) {
-            $product->decrement('stock');
+        foreach ($cartItemCollection->items() as $cartItem) {
+            $this->productStockManager->decrement(
+                $cartItem->productDto->id,
+                $cartItem->quanity
+            );
 
             $order->lines()->create([
-                'product_id' => $product->id,
-                'total_in_cents' => $product->price_in_cents,
-                'quantity' => $productQuantities[$product->id],
+                'product_id' => $cartItem->productDto->id,
+                'total_in_cents' => $cartItem->productDto->priceInCents,
+                'quantity' => $cartItem->quanity,
             ]);
         }
 

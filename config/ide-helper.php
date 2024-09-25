@@ -72,7 +72,7 @@ return [
     |
     */
 
-    'write_model_magic_where' => false,
+    'write_model_magic_where' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'write_eloquent_model_mixins' => false,
+    'write_eloquent_model_mixins' => true,
 
     /*
     |--------------------------------------------------------------------------
