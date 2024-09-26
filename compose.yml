@@ -23,21 +23,21 @@ services:
 
   composer:
     extends:
-      file: compose.tools.yml
+      file: compose.base.yml
       service: composer
     volumes:
       - .:/var/www/html
 
   artisan:
     extends:
-      file: compose.tools.yml
+      file: compose.base.yml
       service: artisan
     volumes:
       - .:/var/www/html
 
   npm:
     extends:
-      file: compose.tools.yml
+      file: compose.base.yml
       service: npm
     volumes:
       - .:/example-app
