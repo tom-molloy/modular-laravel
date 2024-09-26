@@ -80,8 +80,8 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker compose -f compose.base.yml run --rm artisan migrate:fresh
-      - run: docker compose -f compose.base.yml run --rm composer ide-helper-models
+      - run: docker compose -f compose.base.yml run -e APP_ENV --rm artisan migrate:fresh
+      - run: docker compose -f compose.base.yml run -e APP_ENV --rm composer ide-helper-models
 
   test:
     runs-on: ubuntu-latest
@@ -98,4 +98,4 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker compose -f compose.base.yml run --rm artisan test
+      - run: docker compose -f compose.base.yml run -e APP_ENV --rm artisan test
