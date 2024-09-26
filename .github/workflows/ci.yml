@@ -79,7 +79,7 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
       - run: docker compose -f compose.base.yml run --rm artisan migrate:fresh
-      - run: docker compose -f compose.base.yml run --rm ide-helper-models
+      - run: docker compose -f compose.base.yml run --rm composer ide-helper-models
 
   test:
     runs-on: ubuntu-latest
