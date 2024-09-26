@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Order\Database\Factories\OrderFactory;
+use Modules\Payment\Models\Payment;
 
 /**
  * @property string $id
@@ -21,21 +22,10 @@ use Modules\Order\Database\Factories\OrderFactory;
  * @property string $payment_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Payment|null $lastPayment
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Modules\Order\Models\OrderLine> $lines
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Payment> $payments
  * @property-read User|null $user
- *
- * @method static \Modules\Order\Database\Factories\OrderFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<Order> newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<Order> newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<Order> query()
- * @method static \Illuminate\Database\Eloquent\Builder|Order whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentGateway($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order wherePaymentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order whereTotalInCents($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  *
  * @mixin \Eloquent
  */
@@ -73,6 +63,14 @@ class Order extends Model
     public function lines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
+    }
+
+    /**
+     * @return HasMany<Payment, $this>
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 
     protected static function newFactory(): OrderFactory

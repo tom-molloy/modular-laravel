@@ -59,6 +59,14 @@ class CheckoutController
             ]);
         }
 
+        $order->payments()->create([
+            'total_in_cents' => $orderTotal,
+            'status' => 'paid',
+            'payment_gateway' => 'PayBuddy',
+            'payment_id' => $charge['id'],
+            'user_id' => $guard->user()?->getAuthIdentifier(),
+        ]);
+
         return response()->json([
             'order_url' => $order->url(),
         ], 201);

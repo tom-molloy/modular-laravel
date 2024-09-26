@@ -63,6 +63,14 @@ services:
       - .:/example-app
     entrypoint: npm
 
+  phpstan:
+    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
+    user: ${UID:-1000}:${GID:-1000}
+    volumes:
+      - .:/var/www/html
+    entrypoint: composer phpstan --
+    command: --memory-limit=1G
+
   test:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
     environment:

@@ -14,14 +14,6 @@ use Modules\Product\Database\Factories\CartItemFactory;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  *
- * @method static \Modules\Product\Database\Factories\CartItemFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|CartItem whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class CartItem extends Model

@@ -72,7 +72,7 @@ return [
     |
     */
 
-    'write_model_magic_where' => true,
+    'write_model_magic_where' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -170,7 +170,7 @@ return [
     */
 
     'model_hooks' => [
-        // App\Support\IdeHelper\MyModelHook::class
+        App\Hooks\UnsetQueryMethods::class,
     ],
 
     /*
@@ -238,6 +238,7 @@ return [
     |
     */
     'type_overrides' => [
+        '\Illuminate\Database\Eloquent\Builder|Order' => '\Illuminate\Database\Eloquent\Builder<Order>',
         'integer' => 'int',
         'boolean' => 'bool',
     ],

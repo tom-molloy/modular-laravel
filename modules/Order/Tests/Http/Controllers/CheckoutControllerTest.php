@@ -52,6 +52,15 @@ final class CheckoutControllerTest extends OrderTestCase
         $this->assertTrue($order?->user?->is($user));
         $this->assertSame(60000, $order->total_in_cents);
 
+        // Payment
+        $payment = $order->payments()->latest()->first();
+        $this->assertNotNull($payment);
+        $this->assertSame('paid', $payment->status);
+        $this->assertSame('PayBuddy', $payment->payment_gateway);
+        $this->assertSame(36, strlen($payment->payment_id));
+        $this->assertSame(60000, $payment->total_in_cents);
+        $this->assertTrue($payment->user?->is($user));
+
         // Order Lines
         $this->assertCount(2, $order->lines);
 

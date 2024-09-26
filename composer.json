@@ -54,7 +54,7 @@
         "ide-helper": "@php artisan ide-helper:generate",
         "ide-helper-models": [
             "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:models -W",
+            "@php artisan ide-helper:models -W -R",
             "composer pint app/Models/*.php modules/*/Models/*.php"
         ],
         "phpstan": "vendor/bin/phpstan",
