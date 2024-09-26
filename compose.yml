@@ -79,6 +79,14 @@ services:
       - postgres
     entrypoint: php artisan test
 
+  ide-helper-models:
+    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
+    environment:
+      APP_ENV: testing # use .env.testing
+    depends_on:
+      - postgres
+    entrypoint: composer run ide-helper-models
+
   psql:
     image: postgres:16.3-alpine3.20
     environment:
