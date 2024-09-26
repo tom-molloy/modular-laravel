@@ -1,0 +1,76 @@
+services:
+  dev:
+    image: ghcr.io/tom-molloy/modular-laravel/vite-dev:${TAG:-local}
+    build:
+      context: .
+      target: vite-dev
+    depends_on:
+      - php-fpm
+    ports:
+      - '5173:5173'
+
+  php-fpm:
+    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
+    build:
+      context: .
+      target: php-fpm-dev
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}      
+    depends_on:
+      - postgres
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/var/www/html
+
+  postgres:
+    image: postgres:16.3-alpine3.20
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      PGPASSWORD: password
+      POSTGRES_DB: laravel
+    networks:
+      default:
+        aliases:
+          - postgres.local
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  #############
+  # Tooling
+  ###########
+
+  composer:
+    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
+    depends_on:
+      - postgres
+    user: ${UID:-1000}:${GID:-1000}
+    entrypoint: composer
+
+  artisan:
+    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
+    depends_on:
+      - postgres
+    user: ${UID:-1000}:${GID:-1000}
+    volumes:
+      - .:/var/www/html
+    entrypoint: php artisan
+
+  npm:
+    image: ghcr.io/tom-molloy/modular-laravel/vite-dev:${TAG:-local}
+    volumes:
+      - .:/example-app
+    entrypoint: npm
+
+  psql:
+    image: postgres:16.3-alpine3.20
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGPASSWORD: password
+      POSTGRES_DB: example_app
+    entrypoint: psql -h postgres.local -Uuser example_app
+volumes:
+  db:

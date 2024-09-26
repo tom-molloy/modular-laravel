@@ -1,98 +1,46 @@
 services:
   dev:
-    image: ghcr.io/tom-molloy/modular-laravel/vite-dev:${TAG:-local}
-    build:
-      context: .
-      target: vite-dev
-    depends_on:
-      - php-fpm
-    ports:
-      - '5173:5173'
+    extends:
+      file: compose.base.yml
+      service: dev
     volumes:
       - .:/example-app
 
   php-fpm:
-    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    build:
-      context: .
-      target: php-fpm-dev
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}      
-    depends_on:
-      - postgres
-    ports:
-      - '8000:8000'
+    extends:
+      file: compose.base.yml
+      service: php-fpm
     volumes:
       - .:/var/www/html
 
   postgres:
-    image: postgres:16.3-alpine3.20
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      PGPASSWORD: password
-      POSTGRES_DB: laravel
-    networks:
-      default:
-        aliases:
-          - postgres.local
+    extends:
+      file: compose.base.yml
+      service: postgres
     volumes:
       - ./bin/init-testing-db.sh:/docker-entrypoint-initdb.d/init-testing-db.sh
       - db:/var/lib/postgresql/data
 
   composer:
-    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    user: ${UID:-1000}:${GID:-1000}
+    extends:
+      file: compose.tools.yml
+      service: composer
     volumes:
       - .:/var/www/html
-    entrypoint: composer
 
   artisan:
-    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    depends_on:
-      - postgres
-    user: ${UID:-1000}:${GID:-1000}
+    extends:
+      file: compose.tools.yml
+      service: artisan
     volumes:
       - .:/var/www/html
-    entrypoint: php artisan
 
   npm:
-    image: ghcr.io/tom-molloy/modular-laravel/vite-dev:${TAG:-local}
+    extends:
+      file: compose.tools.yml
+      service: npm
     volumes:
       - .:/example-app
-    entrypoint: npm
-
-  phpstan:
-    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    user: ${UID:-1000}:${GID:-1000}
-    volumes:
-      - .:/var/www/html
-    entrypoint: composer phpstan --
-    command: --memory-limit=1G
-
-  test:
-    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    environment:
-      APP_ENV: testing # use .env.testing
-    depends_on:
-      - postgres
-    entrypoint: php artisan test
-
-  ide-helper-models:
-    image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
-    depends_on:
-      - postgres
-    entrypoint: composer run ide-helper-models
-
-  psql:
-    image: postgres:16.3-alpine3.20
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      PGPASSWORD: password
-      POSTGRES_DB: example_app
-    entrypoint: psql -h postgres.local -Uuser example_app
 
 volumes:
   db:

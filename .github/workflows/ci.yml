@@ -27,12 +27,13 @@ jobs:
       contents: read
       packages: write
     steps:
+      - uses: actions/checkout@v4
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker run --rm ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:$TAG composer run pint -- --test
+      - run: docker compose -f compose.base.yml run --rm composer pint -- --test
 
   rector:
     runs-on: ubuntu-latest
@@ -41,12 +42,13 @@ jobs:
       contents: read
       packages: write
     steps:
+      - uses: actions/checkout@v4
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker run --rm ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:$TAG composer run rector -- --dry-run
+      - run: docker compose -f compose.base.yml run --rm composer rector -- --dry-run
 
   phpstan:
     runs-on: ubuntu-latest
@@ -55,12 +57,13 @@ jobs:
       contents: read
       packages: write
     steps:
+      - uses: actions/checkout@v4
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker run --rm ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:$TAG composer run phpstan -- --memory-limit=1G
+      - run: docker compose -f compose.base.yml run --rm composer phpstan -- --memory-limit=1G
 
   ide-helper-models:
     runs-on: ubuntu-latest
@@ -75,8 +78,8 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker compose run --rm artisan migrate:fresh
-      - run: docker compose run --rm ide-helper-models      
+      - run: docker compose -f compose.base.yml run --rm artisan migrate:fresh
+      - run: docker compose -f compose.base.yml run --rm ide-helper-models
 
   test:
     runs-on: ubuntu-latest
@@ -91,4 +94,4 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker compose run --rm test
+      - run: docker compose -f compose.base.yml run --rm artisan test
