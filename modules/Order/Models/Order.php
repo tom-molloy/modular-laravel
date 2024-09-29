@@ -46,7 +46,7 @@ class Order extends Model
 
     public function url(): string
     {
-        return "order/{$this->id}";
+        return route('order::orders.show', $this);
     }
 
     /**
