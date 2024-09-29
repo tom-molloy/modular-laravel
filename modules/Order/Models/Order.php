@@ -18,11 +18,8 @@ use Modules\Payment\Models\Payment;
  * @property int $user_id
  * @property int $total_in_cents
  * @property string $status
- * @property string $payment_gateway
- * @property string $payment_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read Payment|null $lastPayment
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Modules\Order\Models\OrderLine> $lines
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Payment> $payments
  * @property-read User|null $user
@@ -38,10 +35,8 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'payment_id',
         'status',
         'total_in_cents',
-        'payment_gateway',
     ];
 
     public function url(): string

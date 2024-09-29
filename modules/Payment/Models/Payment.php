@@ -35,6 +35,7 @@ class Payment extends Model
         'payment_gateway',
         'payment_id',
         'user_id',
+        'order_id',
     ];
 
     /**

@@ -7,7 +7,6 @@ namespace Modules\Order\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Modules\Order\Models\Order;
-use Str;
 
 final class OrderTest extends OrderTestCase
 {
@@ -20,8 +19,6 @@ final class OrderTest extends OrderTestCase
             'user_id' => $user->id,
             'total_in_cents' => 1000,
             'status' => 'paid',
-            'payment_gateway' => 'PayBuddy',
-            'payment_id' => Str::uuid(),
         ]);
 
         $this->assertNotNull($order);

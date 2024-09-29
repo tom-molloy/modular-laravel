@@ -18,8 +18,6 @@ return new class extends Migration
             $blueprint->foreignId('user_id');
             $blueprint->unsignedInteger('total_in_cents');
             $blueprint->string('status');
-            $blueprint->string('payment_gateway');
-            $blueprint->foreignUuid('payment_id');
             $blueprint->timestamps();
         });
     }
