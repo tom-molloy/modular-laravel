@@ -14,15 +14,10 @@ services:
     build:
       context: .
       target: php-fpm-dev
-      args:
-        - UID=${UID:-1000}
-        - GID=${GID:-1000}      
     depends_on:
       - postgres
     ports:
       - '8000:8000'
-    volumes:
-      - .:/var/www/html
 
   postgres:
     image: postgres:16.3-alpine3.20
@@ -47,14 +42,12 @@ services:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
     depends_on:
       - postgres
-    user: ${UID:-1000}:${GID:-1000}
     entrypoint: composer
 
   artisan:
     image: ghcr.io/tom-molloy/modular-laravel/php-fpm-dev:${TAG:-local}
     depends_on:
       - postgres
-    user: ${UID:-1000}:${GID:-1000}
     entrypoint: php artisan
 
   npm:
