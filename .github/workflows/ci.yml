@@ -71,8 +71,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-    env:
-      APP_ENV: testing # use .env.testing
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
@@ -80,17 +78,15 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker compose -f compose.base.yml run -e APP_ENV=$APP_ENV --rm artisan migrate:fresh
-      - run: docker compose -f compose.base.yml run -e APP_ENV=$APP_ENV --rm composer ide-helper-models
+      - run: docker compose -f compose.base.yml run --rm artisan migrate:fresh
+      - run: docker compose -f compose.base.yml run --rm composer ide-helper-models
 
   test:
     runs-on: ubuntu-latest
     needs: build
     permissions:
       contents: read
-      packages: write
-    env:
-      APP_ENV: testing # use .env.testing      
+      packages: write    
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
@@ -98,4 +94,4 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-      - run: docker compose -f compose.base.yml run -e APP_ENV=$APP_ENV --rm artisan test
+      - run: docker compose -f compose.base.yml run --rm artisan test
