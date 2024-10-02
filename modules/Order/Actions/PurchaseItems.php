@@ -29,24 +29,16 @@ class PurchaseItems
         $orderTotal = $cartItemCollection->totalInCents();
 
         return $this->databaseManager->transaction(
-            function () use ($orderTotal, $cartItemCollection, $payBuddy, $paymentToken) {
-                $order = Order::query()->create([
-                    'status' => 'paid',
-                    'total_in_cents' => $orderTotal,
-                    'user_id' => $this->guard->user()?->getAuthIdentifier(),
-                ]);
+            function () use ($orderTotal, $cartItemCollection, $payBuddy, $paymentToken): Order {
+                $order = Order::startForUser($this->guard->user()?->getAuthIdentifier());
+                $order->addLinesFromCartItems($cartItemCollection);
+                $order->fullfill();
 
                 foreach ($cartItemCollection->items() as $cartItem) {
                     $this->productStockManager->decrement(
                         $cartItem->productDto->id,
                         $cartItem->quanity
                     );
-
-                    $order->lines()->create([
-                        'product_id' => $cartItem->productDto->id,
-                        'total_in_cents' => $cartItem->productDto->priceInCents,
-                        'quantity' => $cartItem->quanity,
-                    ]);
                 }
 
                 $this->createPaymentForOrder->handle(

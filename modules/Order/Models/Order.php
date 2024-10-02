@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Order\Database\Factories\OrderFactory;
 use Modules\Payment\Models\Payment;
+use Modules\Product\CartItemCollection;
 
 /**
  * @property string $id
@@ -32,6 +33,10 @@ class Order extends Model
     use HasFactory;
 
     use HasUuids;
+
+    const string PENDING = 'PENDING';
+
+    const string COMPLETED = 'COMPLETED';
 
     protected $fillable = [
         'user_id',
@@ -66,6 +71,35 @@ class Order extends Model
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public static function startForUser(int $userId): self
+    {
+        return new self([
+            'user_id' => $userId,
+            'status' => self::PENDING,
+        ]);
+    }
+
+    public function addLinesFromCartItems(CartItemCollection $cartItemCollection): void
+    {
+        foreach ($cartItemCollection->items() as $cartItem) {
+            $this->lines->push(new OrderLine([
+                'product_id' => $cartItem->productDto->id,
+                'total_in_cents' => $cartItem->productDto->priceInCents,
+                'quantity' => $cartItem->quanity,
+            ]));
+        }
+
+        $this->total_in_cents = $this->lines->sum(fn (OrderLine $orderLine) => $orderLine->total_in_cents);
+    }
+
+    public function fullfill(): void
+    {
+        $this->status = self::COMPLETED;
+
+        $this->save();
+        $this->lines()->saveMany($this->lines);
     }
 
     protected static function newFactory(): OrderFactory
