@@ -44,7 +44,7 @@ class OrderLine extends Model
     }
 
     /**
-     * @return BelongsTo<Product, $this>
+     * @return BelongsTo<Product, self>
      */
     public function product(): BelongsTo
     {
@@ -52,7 +52,7 @@ class OrderLine extends Model
     }
 
     /**
-     * @return BelongsTo<Order, $this>
+     * @return BelongsTo<Order, self>
      */
     public function order(): BelongsTo
     {

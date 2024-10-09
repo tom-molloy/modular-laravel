@@ -1,3 +1,5 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
 parameters:
     level: 8
     tmpDir: .cache/phpstan
@@ -7,3 +9,4 @@ parameters:
         - app
         - tests
         - modules
+        - vendor/laravel/framework/src/Illuminate/Support/Facades/Mail.php

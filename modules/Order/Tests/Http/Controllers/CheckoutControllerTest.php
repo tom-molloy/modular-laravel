@@ -6,6 +6,8 @@ namespace Modules\Order\Tests\Http\Controllers;
 
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Mail;
+use Modules\Order\OrderReceived;
 use Modules\Order\Models\Order;
 use Modules\Order\Tests\OrderTestCase;
 use Modules\Payment\PayBuddy;
@@ -20,6 +22,8 @@ final class CheckoutControllerTest extends OrderTestCase
     #[Test]
     public function it_successfuly_creates_an_order(): void
     {
+        Mail::fake();
+
         $user = UserFactory::new()->createOne();
 
         $products = Product::factory()->count(2)->createMany(
@@ -48,6 +52,8 @@ final class CheckoutControllerTest extends OrderTestCase
             ])
             ->assertStatus(201);
 
+        Mail::assertSent(OrderReceived::class, fn (OrderReceived $orderReceived) => $orderReceived->hasTo($user->email));
+
         // Order
         $this->assertTrue($order?->user?->is($user));
         $this->assertSame(60000, $order->total_in_cents);
@@ -68,7 +74,7 @@ final class CheckoutControllerTest extends OrderTestCase
             $orderLine = $order->lines->where('product_id', $product->id)->first();
 
             $this->assertSame($product->price_in_cents, $orderLine?->total_in_cents);
-            $this->assertSame(1, $orderLine->quantity);
+            $this->assertSame(1, $orderLine?->quantity);
         }
 
         $products = $products->fresh();

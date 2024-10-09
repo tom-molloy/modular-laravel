@@ -49,8 +49,13 @@ class Order extends Model
         return route('order::orders.show', $this);
     }
 
+    public function localisedTotal(): string
+    {
+        return strval($this->total_in_cents / 100);
+    }
+
     /**
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<User, self>
      */
     public function user(): BelongsTo
     {
@@ -58,7 +63,7 @@ class Order extends Model
     }
 
     /**
-     * @return HasMany<OrderLine, $this>
+     * @return HasMany<OrderLine>
      */
     public function lines(): HasMany
     {
@@ -66,7 +71,7 @@ class Order extends Model
     }
 
     /**
-     * @return HasMany<Payment, $this>
+     * @return HasMany<Payment>
      */
     public function payments(): HasMany
     {

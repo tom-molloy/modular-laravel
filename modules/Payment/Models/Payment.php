@@ -46,7 +46,7 @@ class Payment extends Model
     use HasUuids;
 
     /**
-     * @return BelongsTo<User,$this>
+     * @return BelongsTo<User, self>
      */
     public function user(): BelongsTo
     {
@@ -54,7 +54,7 @@ class Payment extends Model
     }
 
     /**
-     * @return BelongsTo<Order,$this>
+     * @return BelongsTo<Order, self>
      */
     public function order(): BelongsTo
     {

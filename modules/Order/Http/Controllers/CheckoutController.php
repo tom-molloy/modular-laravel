@@ -28,7 +28,7 @@ class CheckoutController
             $order = $this->purchaseItems->handle(
                 $cartItemCollection,
                 PayBuddy::make(),
-                $checkoutRequest->string('payment_token')->value()
+                $checkoutRequest->string('payment_token')->value(),
             );
         } catch (PaymentFailedException) {
             throw ValidationException::withMessages([
