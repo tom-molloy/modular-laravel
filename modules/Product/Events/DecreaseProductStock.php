@@ -15,10 +15,10 @@ class DecreaseProductStock
 
     public function handle(OrderFulfilled $orderFulfilled): void
     {
-        foreach ($orderFulfilled->cartItemCollection->items() as $cartItem) {
+        foreach ($orderFulfilled->orderDto->orderLines as $orderLine) {
             $this->productStockManager->decrement(
-                $cartItem->productDto->id,
-                $cartItem->quanity
+                $orderLine->productId,
+                $orderLine->quantity
             );
         }
     }

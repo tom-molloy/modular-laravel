@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Modules\Order\Exceptions;
+namespace Modules\Payment\Exceptions;
+
+use RuntimeException;
 
 class PaymentFailedException extends \Exception
 {

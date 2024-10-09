@@ -7,10 +7,11 @@ namespace Modules\Order\Tests\Http\Controllers;
 use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Mail;
-use Modules\Order\OrderReceived;
 use Modules\Order\Models\Order;
+use Modules\Order\OrderReceived;
 use Modules\Order\Tests\OrderTestCase;
-use Modules\Payment\PayBuddy;
+use Modules\Payment\PayBuddySdk;
+use Modules\Payment\PaymentProvider;
 use Modules\Product\Database\Factories\ProductFactory;
 use Modules\Product\Models\Product;
 use PHPUnit\Framework\Attributes\Test;
@@ -33,7 +34,7 @@ final class CheckoutControllerTest extends OrderTestCase
             ]
         );
 
-        $paymentToken = PayBuddy::validToken();
+        $paymentToken = PayBuddySdk::validToken();
 
         $testResponse = $this->actingAs($user)
             ->post(route('order::checkout', [
@@ -62,7 +63,7 @@ final class CheckoutControllerTest extends OrderTestCase
         $payment = $order->payments()->latest()->first();
         $this->assertNotNull($payment);
         $this->assertSame('paid', $payment->status);
-        $this->assertSame('PayBuddy', $payment->payment_gateway);
+        $this->assertSame(PaymentProvider::PayBuddy, $payment->payment_gateway);
         $this->assertSame(36, strlen($payment->payment_id));
         $this->assertSame(60000, $payment->total_in_cents);
         $this->assertTrue($payment->user?->is($user));
@@ -88,7 +89,7 @@ final class CheckoutControllerTest extends OrderTestCase
     {
         $user = UserFactory::new()->createOne();
         $product = ProductFactory::new()->createOne();
-        $paymentToken = PayBuddy::invalidToken();
+        $paymentToken = PayBuddySdk::invalidToken();
 
         $testResponse = $this->actingAs($user)
             ->postJson(route('order::checkout', [

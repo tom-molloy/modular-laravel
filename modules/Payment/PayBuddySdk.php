@@ -7,7 +7,7 @@ namespace Modules\Payment;
 use NumberFormatter;
 use Str;
 
-final class PayBuddy
+final class PayBuddySdk
 {
     public static function make(): self
     {

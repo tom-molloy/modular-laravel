@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Order\Models\Order;
 use Modules\Payment\Database\Factories\PaymentFactory;
+use Modules\Payment\PaymentProvider;
 
 /**
  * @property string $id
@@ -36,6 +37,10 @@ class Payment extends Model
         'payment_id',
         'user_id',
         'order_id',
+    ];
+
+    protected $casts = [
+        'payment_gateway' => PaymentProvider::class
     ];
 
     /**

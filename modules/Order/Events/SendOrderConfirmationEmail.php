@@ -11,9 +11,9 @@ class SendOrderConfirmationEmail
 {
     public function handle(OrderFulfilled $orderFulfilled): void
     {
-        Mail::to($orderFulfilled->userEmail)->send(
+        Mail::to($orderFulfilled->userDto->email)->send(
             new OrderReceived(
-                $orderFulfilled->localisedTotal
+                $orderFulfilled->orderDto->localisedTotal
             )
         );
     }
