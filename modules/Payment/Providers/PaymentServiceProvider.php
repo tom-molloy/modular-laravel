@@ -18,6 +18,6 @@ class PaymentServiceProvider extends ServiceProvider
 
         // $this->app->register(RouteServiceProvider::class);
 
-        $this->app->bind(PaymentGateway::class, fn () => new PayBuddyGateway(PayBuddySdk::make()));
+        $this->app->bind(PaymentGateway::class, fn (): \Modules\Payment\PayBuddyGateway => new PayBuddyGateway(PayBuddySdk::make()));
     }
 }

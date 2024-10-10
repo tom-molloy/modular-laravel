@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Payment\Exceptions;
 
-use RuntimeException;
-
 class PaymentFailedException extends \Exception
 {
     public static function dueToInvalidToken(): self

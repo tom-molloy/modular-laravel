@@ -40,7 +40,7 @@ class Payment extends Model
     ];
 
     protected $casts = [
-        'payment_gateway' => PaymentProvider::class
+        'payment_gateway' => PaymentProvider::class,
     ];
 
     /**

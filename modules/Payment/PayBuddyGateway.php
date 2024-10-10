@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Payment;
 
 use Modules\Payment\Exceptions\PaymentFailedException;
@@ -7,10 +9,8 @@ use RuntimeException;
 
 class PayBuddyGateway implements PaymentGateway
 {
-    public function __construct(protected PayBuddySdk $payBuddySdk)
-    {
-    }
- 
+    public function __construct(protected PayBuddySdk $payBuddySdk) {}
+
     public function id(): PaymentProvider
     {
         return PaymentProvider::PayBuddy;
@@ -20,14 +20,14 @@ class PayBuddyGateway implements PaymentGateway
     {
         try {
             $charge = $this->payBuddySdk->charge(
-                $paymentDetails->token, 
+                $paymentDetails->token,
                 $paymentDetails->amountInCents,
                 $paymentDetails->statementDescription
-            );    
-        } catch(RuntimeException) {
+            );
+        } catch (RuntimeException) {
             throw PaymentFailedException::dueToInvalidToken();
         }
-        
+
         return new SuccessfulPayment(
             $charge['id'],
             $charge['amount_in_cents'],

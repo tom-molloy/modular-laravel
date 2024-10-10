@@ -12,7 +12,6 @@ use Modules\Order\Actions\PurchaseItems;
 use Modules\Order\Http\Requests\CheckoutRequest;
 use Modules\Order\PendingPayment;
 use Modules\Payment\Exceptions\PaymentFailedException;
-use Modules\Payment\PayBuddySdk;
 use Modules\Payment\PaymentGateway;
 use Modules\Product\CartItemCollection;
 use Modules\Product\Warehouse\ProductStockManager;
