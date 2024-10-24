@@ -8,5 +8,4 @@ parameters:
     paths:
         - app
         - tests
-        - modules
         - vendor/laravel/framework/src/Illuminate/Support/Facades/Mail.php

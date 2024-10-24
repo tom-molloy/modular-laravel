@@ -1,3 +1,0 @@
-<div>
-    Product: {{ $product }}
-</div>
