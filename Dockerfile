@@ -23,8 +23,9 @@ RUN npm install
 
 FROM base AS composer-install
 WORKDIR /var/www/html
-COPY --from=composer:2.7.2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.8.0 /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
+COPY modules modules
 RUN composer install --no-autoloader
 
 # Install PHP prod dependencies

@@ -10,8 +10,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "internachi/modular": "^2.2",
         "laravel/framework": "^11.9",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "modules/order": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.1",
@@ -35,7 +37,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Modules\\Order\\Tests\\": "modules/order/tests/"
         }
     },
     "scripts": {
@@ -77,5 +80,14 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "path",
+            "url": "modules/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ]
 }
