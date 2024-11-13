@@ -59,10 +59,10 @@ services:
   psql:
     image: postgres:16.3-alpine3.20
     environment:
-      POSTGRES_USER: user
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: password
       PGPASSWORD: password
       POSTGRES_DB: example_app
-    entrypoint: psql -h postgres.local -Uuser example_app
+    entrypoint: psql -h postgres.local -Uroot laravel
 volumes:
   db:

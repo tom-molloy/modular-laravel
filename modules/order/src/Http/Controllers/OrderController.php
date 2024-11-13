@@ -3,7 +3,6 @@
 namespace Modules\Order\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 use Modules\Order\Models\Order;
 
 class OrderController
@@ -19,16 +18,16 @@ class OrderController
     {
         $products = [
             (object) [
-                "name" =>  "Umbrella",
-                "price" => 12
+                'name' => 'Umbrella',
+                'price' => 12,
             ],
             (object) [
-                "name" =>  "Raincoat",
-                "price" => 80
+                'name' => 'Raincoat',
+                'price' => 80,
             ],
             (object) [
-                "name" =>  "Gumboots",
-                "price" => 45
+                'name' => 'Gumboots',
+                'price' => 45,
             ],
         ];
 
@@ -37,8 +36,7 @@ class OrderController
 
     public function store(): View
     {
-        
-        
+
         return $this->index();
     }
 }

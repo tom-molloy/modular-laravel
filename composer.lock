@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49f6bc97512fd855eaaeacf06b988984",
+    "content-hash": "8e24edcb5c57478d9f56fb1ec1e0b5d2",
     "packages": [
         {
             "name": "brick/math",
@@ -2598,7 +2598,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/order",
-                "reference": "1ff8f6f1fcaaa0986bc95a22a825dc52bda6fb6c"
+                "reference": "776de68e5b3ad426e178f472327a9f14ba85da9a"
             },
             "type": "library",
             "extra": {
@@ -2611,8 +2611,78 @@
             "autoload": {
                 "psr-4": {
                     "Modules\\Order\\": "src/",
+                    "Modules\\Order\\Tests\\": "tests/",
                     "Modules\\Order\\Database\\Factories\\": "database/factories/",
                     "Modules\\Order\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Modules\\Order\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/payment",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "modules/payment",
+                "reference": "887585460bf979835377cda0585f073a9c55df77"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Payment\\Providers\\PaymentServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Payment\\": "src/",
+                    "Modules\\Payment\\Tests\\": "tests/",
+                    "Modules\\Payment\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Payment\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/product",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "modules/product",
+                "reference": "54a2618045a38024957eca04e8608ff5de5636ed"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Product\\Providers\\ProductServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Product\\": "src/",
+                    "Modules\\Product\\Tests\\": "tests/",
+                    "Modules\\Product\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Product\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

@@ -2,10 +2,13 @@
 
 namespace Modules\Order\Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Modules\Order\Tests\OrderTestCase;
 
 class GetOrdersTest extends OrderTestCase
 {
+    use DatabaseMigrations;
+
     /**
      * A basic feature test example.
      */
@@ -15,7 +18,6 @@ class GetOrdersTest extends OrderTestCase
 
         $response->assertStatus(200);
 
-        $response->assertContent('Ok');
-
+        $response->assertViewIs('order::index');
     }
 }

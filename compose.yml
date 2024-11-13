@@ -44,5 +44,10 @@ services:
     volumes:
       - .:/example-app
 
+  psql:
+    extends:
+      file: compose.base.yml
+      service: psql    
+
 volumes:
   db:

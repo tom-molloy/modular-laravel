@@ -2,54 +2,53 @@
 
 namespace Modules\Order\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Modules\Order\Commands\PurchaseItems;
+use Modules\Order\Dto\PendingPayment;
 use Modules\Order\Http\Requests\CheckoutRequest;
+use Modules\Payment\Exceptions\PaymentFailedException;
+use Modules\Payment\Interfaces\PaymentGateway;
+use Modules\Product\Collections\CartItemCollection;
+use Modules\Product\Models\Product;
 
 class CheckoutController
 {
+    public function __construct(
+        protected PurchaseItems $purchaseItems,
+        protected PaymentGateway $paymentGateway,
+        protected Auth $auth
+    ) {}
+
     public function create(): View
     {
-        $products = [
-            (object) [
-                "name" =>  "Umbrella",
-                "price" => 12
-            ],
-            (object) [
-                "name" =>  "Raincoat",
-                "price" => 80
-            ],
-            (object) [
-                "name" =>  "Gumboots",
-                "price" => 45
-            ],
-        ];
-
-        return view('order::create', ['products' => $products]);
+        return view('order::create', ['products' => Product::all()]);
     }
 
     public function store(CheckoutRequest $request): RedirectResponse
     {
-        dd($request->input(), $request);
+        $cartItems = CartItemCollection::fromCheckoutData($request->input('products'));
+        $pendingPayment = new PendingPayment($this->paymentGateway, $request->string('payment_token'));
 
-        // $cartItems = CartItemCollection::fromCheckoutData($request->input('products'));
-        // $cartItems = CartItemCollection::fromCheckoutData($request->input('products'));
-        // $pendingPayment = new PendingPayment($this->paymentGateway, $request->input('payment_token'));
-        // $userDto = UserDto::fromEloquentModel($request->user());
+        // TODO: Proper auth
+        // $userDto = $this->auth->user();
+        $userDto = User::first();
 
-        // try {
-        //     $order = $this->purchaseItems->handle(
-        //         $cartItems,
-        //         $pendingPayment,
-        //         $userDto
-        //     );
-        // } catch (PaymentFailedException) {
-        //     throw ValidationException::withMessages([
-        //         'payment_token' => 'We could not complete your payment.',
-        //     ]);
-        // }
-        
+        try {
+            $this->purchaseItems->handle(
+                $cartItems,
+                $pendingPayment,
+                $userDto
+            );
+        } catch (PaymentFailedException) {
+            throw ValidationException::withMessages([
+                'payment_token' => 'We could not complete your payment.',
+            ]);
+        }
+
         return redirect()->route('orders.index');
     }
 }

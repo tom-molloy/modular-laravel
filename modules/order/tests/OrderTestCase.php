@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Order\Tests;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestCase;
 
-class OrderTestCase extends BaseTestCase
+class OrderTestCase extends TestCase
 {
     //
 }

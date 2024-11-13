@@ -3,6 +3,7 @@
 namespace Modules\Order\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Ramsey\Uuid\Uuid;
 
 class CheckoutRequest extends FormRequest
 {
@@ -13,7 +14,16 @@ class CheckoutRequest extends FormRequest
     {
         return true;
     }
-    
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'product_ids' => array_keys($this->get('products')),
+            'products' => array_map(fn ($quantity) => intval($quantity), $this->get('products')),
+            'payment_token' => Uuid::uuid4()->toString(),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,12 +31,11 @@ class CheckoutRequest extends FormRequest
      */
     public function rules(): array
     {
-        
         return [
-            // 'payment_token' => ['required', 'string'],
-            // 'products' => ['required', 'array'],
-            // 'products.*.id' => ['required', 'numeric'],
-            // 'products.*.quantity' => ['required', 'numeric'],
+            'product_ids' => 'exists:products,id',
+            'products' => 'required|array|min:1',
+            'products.*' => 'int',
+            'payment_token' => 'required|uuid',
         ];
     }
 }
